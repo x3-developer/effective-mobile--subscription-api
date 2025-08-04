@@ -23,7 +23,6 @@ func NewUpdateUseCase(repo repo.Repository) UpdateUseCase {
 }
 
 func (u *updateUseCase) Execute(ctx context.Context, id uint, model *model.Subscription) (*model.Subscription, []res.ErrorField, error) {
-	//var validationErrors []res.ErrorField
 	existsModel, err := u.repo.GetById(ctx, id)
 	if err != nil {
 		return nil, nil, err

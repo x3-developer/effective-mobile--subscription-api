@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"errors"
+	"fmt"
 	"github.com/google/uuid"
 	"log"
 	"subscriptions/internal/modules/subscription/v1/domain/model"
@@ -141,19 +142,21 @@ func (r *repository) CalculateTotalCost(ctx context.Context, startDate, endDate 
 	query := `
 		SELECT SUM(price)
 		FROM subscriptions
-		WHERE start_date >= $1 AND end_date <= $2
+		WHERE start_date >= $1 AND (end_date <= $2 OR end_date IS NULL)
 	`
 
 	args := []interface{}{startDate, endDate}
+	argIndex := 3
 
 	if userId != nil {
-		query += " AND user_id = $3"
-		args = append(args, userId)
+		query += fmt.Sprintf(" AND user_id = $%d", argIndex)
+		args = append(args, *userId)
+		argIndex++
 	}
 
 	if subscriptionName != nil {
-		query += " AND name = $4"
-		args = append(args, subscriptionName)
+		query += fmt.Sprintf(" AND name = $%d", argIndex)
+		args = append(args, *subscriptionName)
 	}
 
 	var totalCost sql.NullFloat64

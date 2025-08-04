@@ -22,8 +22,6 @@ func NewCreateUseCase(repo repo.Repository) CreateUseCase {
 }
 
 func (u *createUseCase) Execute(ctx context.Context, model *model.Subscription) (*model.Subscription, []res.ErrorField, error) {
-	//var validationErrors []res.ErrorField
-
 	createdModel, err := u.repo.Create(ctx, model)
 	if err != nil {
 		return nil, nil, err

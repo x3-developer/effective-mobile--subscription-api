@@ -20,7 +20,7 @@ func GetErrorCodeByTag(tag string) ErrorCode {
 		return MinLength
 	case "max":
 		return MaxLength
-	case "date":
+	case "monthYear":
 		return BadRequest
 	case "uuid4":
 		return BadRequest

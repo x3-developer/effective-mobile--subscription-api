@@ -5,16 +5,17 @@ import (
 	"time"
 )
 
+const MonthYearLayout = "01-2006"
+
 var validate *validator.Validate
 
 func init() {
 	validate = validator.New()
-	_ = validate.RegisterValidation("date", validateDate)
+	_ = validate.RegisterValidation("monthYear", validateMonthYear)
 }
 
-func validateDate(fl validator.FieldLevel) bool {
+func validateMonthYear(fl validator.FieldLevel) bool {
 	value := fl.Field().String()
-	layout := "02.01.2006"
-	_, err := time.Parse(layout, value)
+	_, err := time.Parse(MonthYearLayout, value)
 	return err == nil
 }

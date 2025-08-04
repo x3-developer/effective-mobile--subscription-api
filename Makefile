@@ -56,3 +56,12 @@ swagger-clean:
 swagger-fmt:
 	@echo "Formatting Swagger docs..."
 	swag fmt
+
+compose-up:
+	docker compose up -d
+
+compose-down:
+	docker compose down
+
+compose-logs:
+	docker compose logs -f --tail=100
